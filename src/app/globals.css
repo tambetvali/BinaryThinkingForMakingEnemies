@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+/* ── Night theme (default) ── */
+:root, [data-theme="night"] {
+  --bg-deep: #050810;
+  --bg-card: #0d1420;
+  --bg-card-hover: #111827;
+  /* Fixed/overlay UI surfaces — used by nav, sidebar, flyouts */
+  --ui-bg: rgba(13,20,40,0.92);
+  --ui-bg-solid: #0d1420;
+  --ui-border: rgba(240,165,0,0.18);
+  --ui-shadow: rgba(0,0,0,0.6);
+  --gold: #f0a500;
+  --gold-dim: rgba(240,165,0,0.18);
+  --gold-glow: rgba(240,165,0,0.4);
+  --teal: #1ecbe1;
+  --teal-dim: rgba(30,203,225,0.15);
+  --purple: #8b5cf6;
+  --purple-dim: rgba(139,92,246,0.15);
+  --red-fire: #e85d4a;
+  --red-dim: rgba(232,93,74,0.15);
+  --text-parchment: #e8dcc8;
+  --text-muted: #7a8a9a;
+  --border-gold: rgba(240,165,0,0.2);
+  --border-teal: rgba(30,203,225,0.2);
+}
+
+/* ── Day theme ── */
+[data-theme="day"] {
+  --bg-deep: #f5f0e8;
+  --bg-card: #ede8dc;
+  --bg-card-hover: #e0d9cc;
+  /* Fixed/overlay UI surfaces in day mode — light parchment */
+  --ui-bg: rgba(237,232,220,0.95);
+  --ui-bg-solid: #ede8dc;
+  --ui-border: rgba(176,120,0,0.25);
+  --ui-shadow: rgba(0,0,0,0.18);
+  --gold: #b07800;
+  --gold-dim: rgba(176,120,0,0.14);
+  --gold-glow: rgba(176,120,0,0.3);
+  --teal: #0d8fa0;
+  --teal-dim: rgba(13,143,160,0.12);
+  --purple: #6d39c8;
+  --purple-dim: rgba(109,57,200,0.12);
+  --red-fire: #c0392b;
+  --red-dim: rgba(192,57,43,0.12);
+  --text-parchment: #1a1a2e;
+  --text-muted: #5a6678;
+  --border-gold: rgba(176,120,0,0.25);
+  --border-teal: rgba(13,143,160,0.2);
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body {
+  max-width: 100vw;
+  background-color: var(--bg-deep);
+  color: var(--text-parchment);
+  font-family: var(--font-crimson), Georgia, serif;
+  overflow-x: hidden;
+  user-select: text;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+body {
+  overflow-y: auto;
+  /* Leave room for the left floating sidebar */
+  padding-left: 96px;
+}
+
+@media (max-width: 600px) {
+  body { padding-left: 68px; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+a { color: inherit; text-decoration: none; }
+
+/* Cosmic background noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(139,92,246,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(30,203,225,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 80% at 50% 50%, rgba(240,165,0,0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Runic border utility */
+.rune-border {
+  border: 1px solid var(--border-gold);
+  position: relative;
+}
+.rune-border::before,
+.rune-border::after {
+  content: '⌘';
+  position: absolute;
+  color: var(--gold);
+  opacity: 0.4;
+  font-size: 10px;
+  top: -7px;
+}
+.rune-border::before { left: 12px; }
+.rune-border::after { right: 12px; }
+
+/* Glow on hover */
+.glow-gold:hover { box-shadow: 0 0 20px var(--gold-glow); transition: box-shadow 0.3s; }
+.glow-teal:hover { box-shadow: 0 0 20px rgba(30,203,225,0.35); transition: box-shadow 0.3s; }
+
+/* Selector button base */
+.selector-btn {
+  background: rgba(13,20,40,0.9);
+  border: 1px solid var(--border-gold);
+  color: var(--text-muted);
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: var(--font-cinzel), serif;
+}
+.selector-btn:hover { border-color: var(--gold); color: var(--gold); }
+.selector-btn.active {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* Section fade-in */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease both; }
+
+/* Yin-Yang SVG fill animation */
+@keyframes slowSpin { to { transform: rotate(360deg); } }
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px var(--gold)); }
+}
+
+/* Triquetra geometry */
+@keyframes hexPulse {
+  0%, 100% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 0.8; }
+}
+
+/* Philosophy card */
+.phil-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 4px;
+  padding: 24px;
+  position: relative;
+  transition: all 0.3s;
+}
+.phil-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 30px var(--gold-dim);
+}
+
+/* Highlight text by logic mode */
+.highlight-binary { color: var(--red-fire); font-weight: 600; }
+.highlight-taoist { color: var(--teal); font-weight: 600; }
+.highlight-laegna { color: var(--gold); font-weight: 600; }
+.highlight-material { color: #cd853f; }
+.highlight-spiritual { color: var(--purple); }
+
+/* Navigation */
+nav { font-family: var(--font-cinzel), serif; }
+
+/* Heading styles */
+h1, h2, h3 { font-family: var(--font-cinzel), serif; letter-spacing: 0.05em; }
+
+/* Code blocks (Laegna math) */
+code, .laegna-symbol {
+  font-family: var(--font-mono), monospace;
+  color: var(--gold);
+  background: var(--gold-dim);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+/* Chat component */
+.chat-bubble-user {
+  background: var(--gold-dim);
+  border: 1px solid var(--border-gold);
+  border-radius: 4px 4px 4px 0;
+}
+.chat-bubble-ai {
+  background: var(--teal-dim);
+  border: 1px solid var(--border-teal);
+  border-radius: 4px 4px 0 4px;
+}
+
+/* Binary opposition visual */
+.opposition-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+
+/* Reactive text highlight transitions */
+.reactive-text { transition: color 0.4s, background 0.4s; }
+
+/* Geometric divider */
+.geo-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), var(--teal), transparent);
+  margin: 40px 0;
+  opacity: 0.4;
+}
+
+nextjs-portal { display: none !important; }
