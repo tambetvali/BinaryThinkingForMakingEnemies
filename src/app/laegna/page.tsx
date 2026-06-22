@@ -392,7 +392,7 @@ function AttributionSection() {
     { href: 'https://spireason.neocities.org', label: 'spireason.neocities.org' },
     { href: 'https://github.com/tambetvali/SimplyAboutInfinities', label: 'SimplyAboutInfinities' },
     { href: 'https://github.com/tambetvali/LaeLane', label: 'LaeLane' },
-    { href: 'https://laegna.notaku.so', label: 'laegna.notaku.so' },
+    { href: 'https://laegna.notaku.site', label: 'laegna.notaku.site' },
   ];
   return (
     <div className="phil-card" style={{ marginBottom: '2.5rem', borderColor: 'rgba(240,165,0,0.2)', textAlign: 'center' }}>

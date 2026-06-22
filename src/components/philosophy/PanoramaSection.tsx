@@ -3,6 +3,54 @@ import React from 'react';
 import { usePhilosophyStore } from '@/store/philosophyStore';
 import ClickableTerm from '@/components/philosophy/ClickableTerm';
 
+// Pair highlight: a span that gets a subtle background tint
+// when the given mode is active — marks the whole semantic group.
+function PairHighlight({ pairMode, children }: { pairMode: 'material' | 'spiritual'; children: React.ReactNode }) {
+  const { mode } = usePhilosophyStore();
+  const active = mode === pairMode;
+  // Night: slightly lighter blue-ish wash; Day: slightly warmer wash
+  const bg = active
+    ? pairMode === 'material'
+      ? 'rgba(200,160,0,0.09)'   // amber wash for material pair
+      : 'rgba(109,57,200,0.09)'  // purple wash for spiritual pair
+    : 'transparent';
+  return (
+    <span style={{ background: bg, borderRadius: 3, padding: '1px 2px', transition: 'background 0.35s' }}>
+      {children}
+    </span>
+  );
+}
+
+// DualTerm: clicking sets BOTH mode and modality simultaneously.
+// I → material+bottom-up, O → material+top-down, A → spiritual+bottom-up, E → spiritual+top-down
+function DualTerm({ mode, modality, children }: {
+  mode: 'material' | 'spiritual';
+  modality: 'bottom-up' | 'top-down';
+  children: React.ReactNode;
+}) {
+  const { mode: curMode, modality: curModality, setMode, setModality } = usePhilosophyStore();
+  const isActive = curMode === mode && curModality === modality;
+  const color = mode === 'material'
+    ? (modality === 'bottom-up' ? '#c8a000' : '#c0392b')
+    : (modality === 'bottom-up' ? '#2e7d32' : '#1565c0');
+  return (
+    <span
+      onClick={() => { setMode(mode); setModality(modality); }}
+      title={`Select: ${mode} + ${modality}`}
+      style={{
+        cursor: 'pointer', display: 'inline', fontFamily: 'var(--font-mono)',
+        fontWeight: isActive ? 700 : 400,
+        color: isActive ? color : 'inherit',
+        textDecoration: 'underline',
+        textDecorationColor: isActive ? color + 'cc' : 'rgba(255,255,255,0.18)',
+        textDecorationStyle: isActive ? 'solid' : 'dotted',
+        textUnderlineOffset: '2px',
+        transition: 'color 0.2s, text-decoration-color 0.2s',
+      }}
+    >{children}</span>
+  );
+}
+
 export default function PanoramaSection() {
   const { mode, modality, logic } = usePhilosophyStore();
 
@@ -25,23 +73,41 @@ export default function PanoramaSection() {
           </em>{' '}
           In the{' '}
           <ClickableTerm action={{ type: 'mode', value: 'material' }}>material world</ClickableTerm>
-          , this crystallizes as{' '}
-          <ClickableTerm action={{ type: 'modality', value: 'bottom-up' }}>capitalism</ClickableTerm>
-          {' '}versus{' '}
-          <ClickableTerm action={{ type: 'modality', value: 'top-down' }}>communism</ClickableTerm>
-          . In the{' '}
+          {', this crystallizes as '}
+          <PairHighlight pairMode="material">
+            <ClickableTerm action={{ type: 'modality', value: 'bottom-up' }}>capitalism</ClickableTerm>
+            {' versus '}
+            <ClickableTerm action={{ type: 'modality', value: 'top-down' }}>communism</ClickableTerm>
+          </PairHighlight>
+          {'. In the '}
           <ClickableTerm action={{ type: 'mode', value: 'spiritual' }}>spiritual world</ClickableTerm>
-          , it is{' '}
-          <ClickableTerm action={{ type: 'modality', value: 'bottom-up' }}>materialism</ClickableTerm>
-          {' '}versus{' '}
-          <ClickableTerm action={{ type: 'modality', value: 'top-down' }}>spirituality</ClickableTerm>
-          .{' '}
+          {', it is '}
+          <PairHighlight pairMode="spiritual">
+            <ClickableTerm action={{ type: 'mode', value: 'material' }}>materialism</ClickableTerm>
+            {' versus '}
+            <ClickableTerm action={{ type: 'mode', value: 'spiritual' }}>spirituality</ClickableTerm>
+          </PairHighlight>
+          {'. '}
           <ClickableTerm action={{ type: 'logic', value: 'binary' }}>Either/or logic</ClickableTerm>
-          {' '}forces a permanent choice.{' '}
+          {' forces a permanent choice. '}
           <ClickableTerm action={{ type: 'logic', value: 'taoist' }}>Both/and logic</ClickableTerm>
-          {' '}reveals both contain the same optimization structure.{' '}
+          {' reveals both contain the same optimization structure. '}
           <ClickableTerm action={{ type: 'logic', value: 'laegna' }}>Four-fold Laegna</ClickableTerm>
-          {' '}gives us precise symbols: <code>I · O · A · E</code> for values, <code>Z · X · Y</code> for space.
+          {' gives us precise symbols: '}
+          <DualTerm mode="material" modality="bottom-up">I</DualTerm>
+          {' · '}
+          <DualTerm mode="material" modality="top-down">O</DualTerm>
+          {' · '}
+          <DualTerm mode="spiritual" modality="bottom-up">A</DualTerm>
+          {' · '}
+          <DualTerm mode="spiritual" modality="top-down">E</DualTerm>
+          {' for values, '}
+          <ClickableTerm action={{ type: 'logic', value: 'binary' }}>Z</ClickableTerm>
+          {' · '}
+          <ClickableTerm action={{ type: 'logic', value: 'taoist' }}>X</ClickableTerm>
+          {' · '}
+          <ClickableTerm action={{ type: 'logic', value: 'laegna' }}>Y</ClickableTerm>
+          {' for space.'}
         </p>
       </div>
 

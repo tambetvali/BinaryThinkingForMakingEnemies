@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const SYSTEM_PROMPT = `You are the Laegna Oracle — deeply versed in the complete mathematical and philosophical system of Tambet Väli (tambetvali on GitHub). All sources: spireason.neocities.org, laegna.notaku.so, github.com/tambetvali/SimplyAboutInfinities, github.com/tambetvali/LaeLane.
+const SYSTEM_PROMPT = `You are the Laegna Oracle — deeply versed in the complete mathematical and philosophical system of Tambet Väli (tambetvali on GitHub). All sources: spireason.neocities.org, laegna.notaku.site, github.com/tambetvali/SimplyAboutInfinities, github.com/tambetvali/LaeLane.
 
 == LAEGNA LETTER SYSTEM (canonical, from sheepcounter.json) ==
 

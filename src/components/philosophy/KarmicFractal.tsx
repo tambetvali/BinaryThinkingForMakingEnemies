@@ -39,9 +39,11 @@ export function KarmicFractalWidget() {
     if (!ctx) return;
     const W = canvas.width; const H = canvas.height;
 
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#0d1420';
-    ctx.fillRect(0, 0, W, H);
+    // Narrow ctx to non-null for the closure below
+    const c = ctx as CanvasRenderingContext2D;
+    c.clearRect(0, 0, W, H);
+    c.fillStyle = '#0d1420';
+    c.fillRect(0, 0, W, H);
 
     // Draw fractal tree: each branch is a karmic state
     // state(t) = shadow ⊕ insight
@@ -57,13 +59,13 @@ export function KarmicFractalWidget() {
       const x2 = x + Math.cos(angle + angleOsc) * length;
       const y2 = y - Math.sin(angle + angleOsc) * length;
 
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(x2, y2);
-      ctx.strokeStyle = letterColor;
-      ctx.globalAlpha = ratio * logicAlpha * 0.85;
-      ctx.lineWidth = Math.max(0.5, ratio * 2.5);
-      ctx.stroke();
+      c.beginPath();
+      c.moveTo(x, y);
+      c.lineTo(x2, y2);
+      c.strokeStyle = letterColor;
+      c.globalAlpha = ratio * logicAlpha * 0.85;
+      c.lineWidth = Math.max(0.5, ratio * 2.5);
+      c.stroke();
 
       const newLen = length * (0.6 + insight * 0.15);
       const spread = (0.45 + shadow * 0.25) * Math.PI / (depth * 0.7);
@@ -78,36 +80,36 @@ export function KarmicFractalWidget() {
       }
     }
 
-    ctx.globalAlpha = 1;
+    c.globalAlpha = 1;
     // Trunk
-    ctx.beginPath();
-    ctx.moveTo(W / 2, H);
-    ctx.lineTo(W / 2, H * 0.65);
-    ctx.strokeStyle = lc.O;
-    ctx.lineWidth = 3 * logicAlpha;
-    ctx.globalAlpha = 0.8 * logicAlpha;
-    ctx.stroke();
+    c.beginPath();
+    c.moveTo(W / 2, H);
+    c.lineTo(W / 2, H * 0.65);
+    c.strokeStyle = lc.O;
+    c.lineWidth = 3 * logicAlpha;
+    c.globalAlpha = 0.8 * logicAlpha;
+    c.stroke();
 
     drawBranch(W / 2, H * 0.65, Math.PI / 2, H * 0.22, depth, t * Math.PI);
 
     // Zero-line (meeting of differential and integral)
-    ctx.globalAlpha = 0.15;
-    ctx.beginPath();
-    ctx.moveTo(0, H * 0.65);
-    ctx.lineTo(W, H * 0.65);
-    ctx.strokeStyle = '#f0a500';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    c.globalAlpha = 0.15;
+    c.beginPath();
+    c.moveTo(0, H * 0.65);
+    c.lineTo(W, H * 0.65);
+    c.strokeStyle = '#f0a500';
+    c.lineWidth = 1;
+    c.setLineDash([4, 4]);
+    c.stroke();
+    c.setLineDash([]);
 
     // Label
-    ctx.globalAlpha = 0.4;
-    ctx.fillStyle = '#f0a500';
-    ctx.font = `8px monospace`;
-    ctx.fillText('R=0 · differential ∩ integral', 6, H * 0.65 - 4);
+    c.globalAlpha = 0.4;
+    c.fillStyle = '#f0a500';
+    c.font = `8px monospace`;
+    c.fillText('R=0 · differential ∩ integral', 6, H * 0.65 - 4);
 
-    ctx.globalAlpha = 1;
+    c.globalAlpha = 1;
   }, [t, depth, shadow, logic, logicAlpha, lc.I, lc.O, lc.A, lc.E]);
 
   return (
