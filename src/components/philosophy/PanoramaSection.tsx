@@ -44,16 +44,16 @@ export default function PanoramaSection() {
           <ClickableTerm action={{ type: 'modality', value: 'top-down' }}>top down ☀ Yang</ClickableTerm>?
           </em>{' '}
           In the{' '}
-          <ClickableTerm action={{ type: 'mode', value: 'material' }}>material world</ClickableTerm>
-          {', this crystallizes as '}
+          <ClickableTerm action={{ type: 'mode', value: 'material' }}>material</ClickableTerm>
+          {' world, this crystallizes as '}
           <PairHighlight pairMode="material">
             <DualTerm mode="material" modality="bottom-up">capitalism</DualTerm>
             {' versus '}
             <DualTerm mode="material" modality="top-down">communism</DualTerm>
           </PairHighlight>
           {'. In the '}
-          <ClickableTerm action={{ type: 'mode', value: 'spiritual' }}>spiritual world</ClickableTerm>
-          {', it is '}
+          <ClickableTerm action={{ type: 'mode', value: 'spiritual' }}>spiritual</ClickableTerm>
+          {' world, it is '}
           <PairHighlight pairMode="spiritual">
             <DualTerm mode="spiritual" modality="bottom-up">materialism</DualTerm>
             {' versus '}
