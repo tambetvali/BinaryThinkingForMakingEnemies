@@ -1,3 +1,5 @@
+Happyseeds credits are one-time fee: I have to bring this to other platform, and fix the mistakes. I am in love in these visualizations, so I want to remove the two bugs later; but right now I made the priority lower of this, because it still needs to fit at it's own place now.
+
 # 1
 
 "Every society faces a fundamental question: should we organize from the bottom up ☽ Yin or the top down ☀ Yang? In the material world, this crystallizes as capitalism versus communism. In the spiritual world, it is materialism versus spirituality. Either/or logic forces a permanent choice. Both/and logic reveals both contain the same optimization structure. Four-fold Laegna gives us precise symbols: I · O · A · E for values, Z · X · Y for space."
