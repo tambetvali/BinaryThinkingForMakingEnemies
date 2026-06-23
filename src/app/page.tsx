@@ -6,7 +6,7 @@ import SiteNav from '@/components/philosophy/SiteNav';
 import OppositionViz from '@/components/philosophy/OppositionViz';
 import LogicTriangle from '@/components/philosophy/LogicTriangle';
 import PanoramaSection from '@/components/philosophy/PanoramaSection';
-import ClickableTerm from '@/components/philosophy/ClickableTerm';
+import ClickableTerm, { DualTerm } from '@/components/philosophy/ClickableTerm';
 
 const LaegnaAIChat = dynamic(() => import('@/components/philosophy/LaegnaAIChat'), { ssr: false });
 
@@ -33,15 +33,15 @@ export default function Home() {
             In the{' '}
             <ClickableTerm action={{ type: 'mode', value: 'material' }}>material</ClickableTerm>
             {' '}world,{' '}
-            <ClickableTerm action={{ type: 'modality', value: 'bottom-up' }}>capitalism</ClickableTerm>
+            <DualTerm mode="material" modality="bottom-up">capitalism</DualTerm>
             {' '}and{' '}
-            <ClickableTerm action={{ type: 'modality', value: 'top-down' }}>communism</ClickableTerm>
+            <DualTerm mode="material" modality="top-down">communism</DualTerm>
             {' '}oppose each other. In the{' '}
             <ClickableTerm action={{ type: 'mode', value: 'spiritual' }}>spiritual</ClickableTerm>
             {' '}world,{' '}
-            <ClickableTerm action={{ type: 'modality', value: 'bottom-up' }}>materialism</ClickableTerm>
+            <DualTerm mode="spiritual" modality="bottom-up">materialism</DualTerm>
             {' '}and{' '}
-            <ClickableTerm action={{ type: 'modality', value: 'top-down' }}>spirituality</ClickableTerm>
+            <DualTerm mode="spiritual" modality="top-down">spirituality</DualTerm>
             {' '}do. Click any term to explore it through{' '}
             <ClickableTerm action={{ type: 'logic', value: 'binary' }}>either/or</ClickableTerm>
             {', '}

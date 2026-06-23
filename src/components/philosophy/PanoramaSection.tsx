@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { usePhilosophyStore } from '@/store/philosophyStore';
-import ClickableTerm from '@/components/philosophy/ClickableTerm';
+import ClickableTerm, { DualTerm } from '@/components/philosophy/ClickableTerm';
 
 // Pair highlight: a span that gets a subtle background tint
 // when the given mode is active — marks the whole semantic group.
@@ -23,34 +23,6 @@ function PairHighlight({ pairMode, children }: { pairMode: 'material' | 'spiritu
 
 // DualTerm: clicking sets BOTH mode and modality simultaneously.
 // I → material+bottom-up, O → material+top-down, A → spiritual+bottom-up, E → spiritual+top-down
-function DualTerm({ mode, modality, children }: {
-  mode: 'material' | 'spiritual';
-  modality: 'bottom-up' | 'top-down';
-  children: React.ReactNode;
-}) {
-  const { mode: curMode, modality: curModality, setMode, setModality } = usePhilosophyStore();
-  const isActive = curMode === mode && curModality === modality;
-  const color = mode === 'material'
-    ? (modality === 'bottom-up' ? '#c8a000' : '#c0392b')
-    : (modality === 'bottom-up' ? '#2e7d32' : '#1565c0');
-  return (
-    <span
-      onClick={() => { setMode(mode); setModality(modality); }}
-      title={`Select: ${mode} + ${modality}`}
-      style={{
-        cursor: 'pointer', display: 'inline', fontFamily: 'var(--font-mono)',
-        fontWeight: isActive ? 700 : 400,
-        color: isActive ? color : 'inherit',
-        textDecoration: 'underline',
-        textDecorationColor: isActive ? color + 'cc' : 'rgba(255,255,255,0.18)',
-        textDecorationStyle: isActive ? 'solid' : 'dotted',
-        textUnderlineOffset: '2px',
-        transition: 'color 0.2s, text-decoration-color 0.2s',
-      }}
-    >{children}</span>
-  );
-}
-
 export default function PanoramaSection() {
   const { mode, modality, logic } = usePhilosophyStore();
 
@@ -75,17 +47,17 @@ export default function PanoramaSection() {
           <ClickableTerm action={{ type: 'mode', value: 'material' }}>material world</ClickableTerm>
           {', this crystallizes as '}
           <PairHighlight pairMode="material">
-            <ClickableTerm action={{ type: 'modality', value: 'bottom-up' }}>capitalism</ClickableTerm>
+            <DualTerm mode="material" modality="bottom-up">capitalism</DualTerm>
             {' versus '}
-            <ClickableTerm action={{ type: 'modality', value: 'top-down' }}>communism</ClickableTerm>
+            <DualTerm mode="material" modality="top-down">communism</DualTerm>
           </PairHighlight>
           {'. In the '}
           <ClickableTerm action={{ type: 'mode', value: 'spiritual' }}>spiritual world</ClickableTerm>
           {', it is '}
           <PairHighlight pairMode="spiritual">
-            <ClickableTerm action={{ type: 'mode', value: 'material' }}>materialism</ClickableTerm>
+            <DualTerm mode="spiritual" modality="bottom-up">materialism</DualTerm>
             {' versus '}
-            <ClickableTerm action={{ type: 'mode', value: 'spiritual' }}>spirituality</ClickableTerm>
+            <DualTerm mode="spiritual" modality="top-down">spirituality</DualTerm>
           </PairHighlight>
           {'. '}
           <ClickableTerm action={{ type: 'logic', value: 'binary' }}>Either/or logic</ClickableTerm>
